@@ -36,15 +36,6 @@ like the crontab installed:
     role :db,                   'example.com', :primary => true
   end
 
-If you would like to install a crontab with a different name just give that
-name as a string example:
-
-task :production do
-  role :web,                  'example.com', :crontab => 'web_crontab'
-  role :app,                  'example.com', :crontab => 'app_crontab'
-  role :db,                   'example.com', :primary => true
-end
-
 Add an after hook to install the crontab on the server on deploy:
 
   after "deploy:symlink", "crontab:install"
