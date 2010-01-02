@@ -1,8 +1,8 @@
-= CAP CRONTAB
+= CAP CRONTAB INSTALLER
 
-Capistrano recipe for installing crontabs on your servers from the config/crontabs
-directory in your application. Extremely simple, but flexible. Crontabs are evaluated 
-as ERB templates and have access to all capistrano variables.
+Capistrano recipe for installing crontabs from the config/crontabs
+directory in your application. Extremely simple, but flexible. Crontab files
+are evaluated as ERB templates and have access to all capistrano variables.
 
 == INSTALLATION
 
@@ -10,7 +10,7 @@ as ERB templates and have access to all capistrano variables.
   ruby script/plugin install git://github.com/conorh/cap_crontab.git
 
 Create a directory in config/ named crontabs/ and create crontab files for each
-environment you want to install a crontab:
+environment where you want to install a crontab:
 
   config/
     crontabs/
@@ -19,8 +19,10 @@ environment you want to install a crontab:
 
 Example crontab file:
 
+  # Do some stuff once an hour
   0 * * * * RAILS_ENV=<%= rails_env %> ruby <%= current_path %>/script/cron/do_stuff.rb
-  0 * * * * RAILS_ENV=<%= rails_env %> ruby <%= current_path %>/script/cron/do_other_stuff.rb
+  # Do some other stuff every twenty minutes
+  */20 * * * * RAILS_ENV=<%= rails_env %> ruby <%= current_path %>/script/cron/do_other_stuff.rb
 
 This file is evaluated as an ERB template and all of the existing capistrano
 variables are available for use.
@@ -33,6 +35,15 @@ like the crontab installed:
     role :app,                  'example.com', :crontab => true
     role :db,                   'example.com', :primary => true
   end
+
+If you would like to install a crontab with a different name just give that
+name as a string example:
+
+task :production do
+  role :web,                  'example.com', :crontab => 'web_crontab'
+  role :app,                  'example.com', :crontab => 'app_crontab'
+  role :db,                   'example.com', :primary => true
+end
 
 Add an after hook to install the crontab on the server on deploy:
 
