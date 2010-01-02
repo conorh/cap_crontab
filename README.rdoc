@@ -1,0 +1,57 @@
+= CAP CRONTAB INSTALLER
+
+Capistrano recipe for installing a crontab on your server from the config/crontabs
+directory in your application. Crontabs are ERB templates and have access to all
+capistrano variables.
+
+== INSTALLATION
+
+  # FROM RAILS_ROOT
+  ruby script/plugin install git://github.com/conorh/cap_crontab.git
+
+Create a directory in config/ named crontabs/ and create crontab files for each
+environment you want to install a crontab:
+
+  config/
+    crontabs/
+      production
+      staging
+
+Example crontab file:
+
+  0 * * * * RAILS_ENV=<%= rails_env %> ruby <%= current_path %>/script/cron/do_stuff.rb
+  0 * * * * RAILS_ENV=<%= rails_env %> ruby <%= current_path %>/script/cron/do_other_stuff.rb
+
+This file is evaluated as an ERB template and all of the existing capistrano
+variables are available for use.
+
+In your deploy file add the :crontab => true flag on the server(s) where you'd
+like the crontab installed:
+
+  task :staging do
+    role :web,                  'example.com'
+    role :app,                  'example.com', :crontab => true
+    role :db,                   'example.com', :primary => true
+  end
+
+Add an after hook to install the crontab on the server on deploy:
+
+  after "deploy:symlink", "crontab:install"
+
+== USAGE
+
+If you use the 'after' hook the crontab will be installed on each
+deploy.
+
+Otherwise to install it separately:
+
+  cap crontab:install
+
+To show the crontab after installing it:
+
+  cap crontab:show
+
+== COPYRIGHT
+
+Copyright (c) 2010 Conor Hunt <conor DOT hunt AT gmail DOT com>
+Released under the MIT + GPL licenses
