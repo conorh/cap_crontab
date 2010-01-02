@@ -1,8 +1,8 @@
-= CAP CRONTAB INSTALLER
+= CAP CRONTAB
 
-Capistrano recipe for installing a crontab on your server from the config/crontabs
-directory in your application. Crontabs are ERB templates and have access to all
-capistrano variables.
+Capistrano recipe for installing crontabs on your servers from the config/crontabs
+directory in your application. Extremely simple, but flexible. Crontabs are evaluated 
+as ERB templates and have access to all capistrano variables.
 
 == INSTALLATION
 
