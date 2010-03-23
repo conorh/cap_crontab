@@ -55,5 +55,5 @@ To show the crontab after installing it:
 
 == COPYRIGHT
 
-Copyright (c) 2010 Conor Hunt <conor DOT hunt AT gmail DOT com>
-Released under the MIT + GPL licenses
+Copyright (c) 2010 Conor Hunt <conor.hunt AT gmail>
+Released under the MIT license
