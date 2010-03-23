@@ -13,6 +13,7 @@ namespace :crontab do
 
     if cron_template and cron_template.strip != "none"
       buffer = ERB.new(cron_template).result(binding)
+      buffer = buffer.gsub(%r{\r\n?},"\n") # Convert line endings to unix
       put buffer, "#{crontab_file}_crontab_out"
       run "crontab #{crontab_file}_crontab_out"
     else
