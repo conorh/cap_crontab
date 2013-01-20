@@ -36,6 +36,7 @@ In your deploy file add the :crontab => true flag on the server(s) where you'd
 like the crontab installed:
 
   task :staging do
+    set :env, "staging"
     role :web,                  'example.com'
     role :app,                  'example.com', :crontab => true
     role :db,                   'example.com', :primary => true
