@@ -6,8 +6,13 @@ are evaluated as ERB templates and have access to all capistrano variables.
 
 == INSTALLATION
 
-  # FROM RAILS_ROOT
-  ruby script/plugin install git://github.com/conorh/cap_crontab.git
+  # in Gemfile:
+  gem 'cap_crontab'
+
+  $ bundle install
+
+  # in your config/deploy.rb:
+  require 'cap_crontab'
 
 Create a directory in config/ named crontabs/ and create crontab files for each
 environment where you want to install a crontab:
@@ -31,6 +36,7 @@ In your deploy file add the :crontab => true flag on the server(s) where you'd
 like the crontab installed:
 
   task :staging do
+    set :env, "staging"
     role :web,                  'example.com'
     role :app,                  'example.com', :crontab => true
     role :db,                   'example.com', :primary => true

@@ -8,7 +8,7 @@ namespace :crontab do
 
   desc "Install a new crontab on any servers that have :crontab => true"
   task :install, :only => { :crontab => true } do
-    crontab_file = "#{current_path}/config/crontabs/#{rails_env}"
+    crontab_file = "#{current_path}/config/crontabs/#{env}"
     cron_template = capture("test -e #{crontab_file} && cat #{crontab_file} || echo 'none'")
 
     if cron_template and cron_template.strip != "none"
