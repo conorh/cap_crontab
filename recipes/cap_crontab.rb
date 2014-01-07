@@ -3,7 +3,7 @@ require 'erb'
 namespace :crontab do
   desc "Show the existing installed crontab"
   task :show, :only => { :crontab => true } do
-    puts capture("crontab -l")
+    puts capture("crontab -l; true")
   end
 
   desc "Install a new crontab on any servers that have :crontab => true"
